@@ -10,7 +10,7 @@
 ## 0. 本機準備（5 分鐘）
 
 ```bash
-git clone https://github.com/tarng/vocabuddy-mentor.git
+git clone https://github.com/tw-ytp/vocabuddy-mentor.git
 cd vocabuddy-mentor
 npm install
 # 兩個知識來源放在同層目錄（切塊腳本預設路徑 ../vocabuddy、../ytp26h2-labs）
