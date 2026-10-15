@@ -1,0 +1,35 @@
+# Mentor — Cloudflare Worker 設定。database_id 在 `wrangler d1 create` 之後填入（見 docs/SETUP.md）。
+name = "vocabuddy-mentor"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[observability]
+enabled = true
+
+[ai]
+binding = "AI"
+
+[[vectorize]]
+binding = "VECTORS"
+index_name = "vocabuddy-mentor"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vocabuddy-mentor"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[vars]
+EMBED_MODEL = "@cf/google/embeddinggemma-300m"   # 768 維；Workers AI 上架 EmbeddingGemma 2 後改這裡並重建索引
+ANSWER_MODEL = "claude-sonnet-5-5"               # 以教材附錄 B 現值為準
+SITE_URL = "https://tw-ytp.github.io/vocabuddy/"
+MAX_PER_HOUR = "10"
+MAX_PER_DAY = "40"
+MIN_VEC_SCORE = "0.45"
+SERVICE_OPEN = "1"                                # 競賽日改 "0"
+TA_ROLE_ID = ""                                   # 助教身分組 id（可留空）
+
+# secrets（用 `wrangler secret put` 設定，不要寫進這裡）：
+#   DISCORD_PUBLIC_KEY  DISCORD_APP_ID  DISCORD_BOT_TOKEN  ANTHROPIC_API_KEY  ADMIN_TOKEN

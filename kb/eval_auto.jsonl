@@ -1,0 +1,104 @@
+{"q": "git: command not found", "expect_page_id": "lab1", "kind": "rescue", "note": "Git 沒裝好或終端機沒重開。重開終端機再試；還是不行就重跑安裝程式。"}
+{"q": "rejected: fetch first", "expect_page_id": "lab1", "kind": "rescue", "note": "建 repo 時手滑勾了 README，遠端已有你本地沒有的 commit。執行 `git pull origin main --allow-unrelated"}
+{"q": "push 一直要密碼／失敗", "expect_page_id": "lab1", "kind": "rescue", "note": "GitHub 不接受帳號密碼推送，要走瀏覽器授權或個人存取權杖（作法隨版本更新，見附錄 B 時效資訊表）。"}
+{"q": "commit 作者頭像是灰色問號", "expect_page_id": "lab1", "kind": "rescue", "note": "Git 的 `user.email` 和 GitHub 帳號綁定的 email 不一致。先到 GitHub Settings → Emails 看：（1）若你勾"}
+{"q": "找不到開 PR 的按鈕", "expect_page_id": "lab2", "kind": "rescue", "note": "黃色橫幅只出現幾分鐘。走 Pull requests → New pull request，base 選 main、compare 選你的分支。"}
+{"q": "merge 後 GitHub 有新版，本地卻沒有", "expect_page_id": "lab2", "kind": "rescue", "note": "在 GitHub 上按的 merge 發生在遠端。回本地 `git switch main && git pull`。"}
+{"q": "解衝突後 commit 不了", "expect_page_id": "lab2", "kind": "rescue", "note": "忘了先 `git add` 衝突檔案——add 是在告訴 Git「這檔我處理完了」。"}
+{"q": "改動 commit 到錯的分支", "expect_page_id": "lab2", "kind": "rescue", "note": "最常見的是忘了 switch。冷靜，commit 不會消失：速查卡的 `cherry-pick`／`reset` 段有搬移法，或直接請 AI 助手帶你走。"}
+{"q": "終端機說「找不到指令」", "expect_page_id": "lab11", "kind": "rescue", "note": "安裝完沒有重開終端機。關掉視窗重開一個再試。"}
+{"q": "一直跳「未認證」或「請先登入」", "expect_page_id": "lab11", "kind": "rescue", "note": "第 ② 步沒完成，或金鑰貼錯（常見：貼到多餘的空白或引號）。回官方頁重做一次登入流程。"}
+{"q": "它說看不到任何檔案", "expect_page_id": "lab11", "kind": "rescue", "note": "你不在專案資料夾裡。先 `pwd` 看看自己在哪，`cd` 進去再啟動。"}
+{"q": "第 3 題答錯或含糊其詞", "expect_page_id": "lab11", "kind": "rescue", "note": "同上，八成是資料夾不對；也可能你的 `index.html` 還沒 commit，先 `git status` 確認檔案真的在。"}
+{"q": "說額度用完了 / 達到上限", "expect_page_id": "lab11", "kind": "rescue", "note": "免費額度通常按分鐘或按日計算，等一下再試；或改用步驟 1 表格裡的其他工具。"}
+{"q": "中文回應怪怪的、或一直講英文", "expect_page_id": "lab11", "kind": "rescue", "note": "直接跟它說「請用繁體中文回答」。它會照做，而且會記住這一輪。想讓它每次都記得，那就是 5.4 要教的事。"}
+{"q": "指示檔沒生效", "expect_page_id": "lab12", "kind": "rescue", "note": "依序檢查三件事：檔名對不對（見 5.1 的表，大小寫也要對）？在倉庫根目錄還是放到子資料夾去了？有沒有清空舊工作階段（舊階段不會重新讀檔）？"}
+{"q": "它說找不到那個檔案", "expect_page_id": "lab12", "kind": "rescue", "note": "你可能在別的資料夾啟動了工具（Lab 11 步驟 2 的第 ③ 步）。"}
+{"q": "草稿長到 200 行", "expect_page_id": "lab12", "kind": "rescue", "note": "正常，它很愛寫。你的工作就是刪，刪到 60 行以內。刪不下手時問自己：「這條規矩，我這禮拜真的會在意嗎？」"}
+{"q": "它寫了倉庫裡根本沒有的東西（例如提到不存在的測試指令）", "expect_page_id": "lab12", "kind": "rescue", "note": "這是幻覺（第二篇 2.1）。刪掉，並在提示裡加一句「只根據你實際讀到的檔案寫」。"}
+{"q": "`git push` 被拒", "expect_page_id": "lab12", "kind": "rescue", "note": "回第一篇 1.6 的遠端章節；多半是還沒設 upstream，用上面那行帶 `-u` 的指令。"}
+{"q": "隊友用不同工具，檔名不一樣", "expect_page_id": "lab12", "kind": "rescue", "note": "用 5.4 的橋接法（匯入或符號連結），只維護一份真本。"}
+{"q": "該觸發時沒觸發", "expect_page_id": "lab13", "kind": "rescue", "note": "先改 description，不要改內容。把「什麼時候該用」寫得更具體，並把使用者可能會用的說法寫進去（「單字」「words.js」「字表」）。"}
+{"q": "不該觸發時亂觸發", "expect_page_id": "lab13", "kind": "rescue", "note": "description 寫太廣了（例如只寫「單字相關」）。加上限定條件。"}
+{"q": "它說找不到技能", "expect_page_id": "lab13", "kind": "rescue", "note": "資料夾位置錯了（回步驟 1 再問一次），或檔名不是 `SKILL.md`（大小寫要對），或沒有清空舊工作階段。"}
+{"q": "frontmatter 報錯", "expect_page_id": "lab13", "kind": "rescue", "note": "YAML 對縮排與冒號敏感（第四篇 4.3 寫 CI 時踩過同樣的坑）。確認 `---` 上下各一行、冒號後有一個空格、多行描述的續行有縮排。"}
+{"q": "它照做了，但步驟做一半", "expect_page_id": "lab13", "kind": "rescue", "note": "步驟寫得太籠統。把「必須看到什麼輸出才算完成」寫進去（例如第 3 條的「必須看到『檢查通過』」），它才知道怎麼算完成。"}
+{"q": "隊友的工具不一樣，技能資料夾不同", "expect_page_id": "lab13", "kind": "rescue", "note": "技能格式本身是開放標準（5.1），內容可以照搬；差的只是放哪個資料夾。各自放各自的位置，`SKILL.md` 本身只維護一份。"}
+{"q": "它把整個 diff 複述一遍", "expect_page_id": "lab14", "kind": "rescue", "note": "輸出格式沒被遵守。在子代理指示裡把格式要求再寫嚴一點，並加一句「不要複述程式碼內容」。"}
+{"q": "它挑了一堆雞毛蒜皮", "expect_page_id": "lab14", "kind": "rescue", "note": "加一句「只回報你認為值得修改的問題；沒有就說沒有」。模型有討好傾向，會為了「有交代」而硬找問題（第二篇講過的機率性副作用）。"}
+{"q": "它想幫你直接改", "expect_page_id": "lab14", "kind": "rescue", "note": "步驟 2 的工具限制沒生效，回去確認設定。"}
+{"q": "它看不到 diff", "expect_page_id": "lab14", "kind": "rescue", "note": "八成是你請它「自己去 diff」。唯讀的子代理沒有執行指令的權限，跑不了 `git diff`；diff 必須由你在主對話取出來、整段貼進提示裡（步驟 3）。如"}
+{"q": "報告很空泛，沒有行號", "expect_page_id": "lab14", "kind": "rescue", "note": "把「每則發現一行：檔名:行號 — 問題 — 建議」這條規定留著，並要求它「若無法指出具體行號，就不要回報這一則」。指得出行號，你才驗得動。"}
+{"q": "你的工具沒有子代理功能", "expect_page_id": "lab14", "kind": "rescue", "note": "用「開一個乾淨的新工作階段、只交代 review 這件事」代替。效果差一點（沒有自動的上下文隔離），但觀念與流程完全相同。"}
+{"q": "ModuleNotFoundError: anthropic", "expect_page_id": "lab3", "kind": "rescue", "note": "裝錯環境。確認 `pip` 與 `python` 是同一套（可用 `python -m pip install anthropic`）。"}
+{"q": "401 authentication_error", "expect_page_id": "lab3", "kind": "rescue", "note": "環境變數沒設好或終端機沒重開。`echo $ANTHROPIC_API_KEY`（Windows：`echo %ANTHROPIC_API_KEY%`）檢查。"}
+{"q": "429 rate_limit_error", "expect_page_id": "lab3", "kind": "rescue", "note": "呼叫太快或額度用盡——免費方案都有速率限制（rate limit，見附錄 B）。等幾十秒重試；批次任務在迴圈裡加 `time.sleep`。"}
+{"q": "JSON 常常解析失敗", "expect_page_id": "lab3", "kind": "rescue", "note": "prompt 再強調「只輸出 JSON、不要 markdown 圍欄」；或把 temperature 調低。這是 AI 工程的日常，第三篇教更穩的 Struct"}
+{"q": "中文變成 \\uXXXX", "expect_page_id": "lab3", "kind": "rescue", "note": "印出時用 `ensure_ascii=False`（v2 已含）。"}
+{"q": "pip 裝到 0.x，或說找不到 1.x", "expect_page_id": "lab3", "kind": "rescue", "note": "Python 低於 3.10。升級 Python 後 `python -m pip install \"anthropic>=1,<2\"`。"}
+{"q": "AttributeError: 'ThinkingBlock' object has no attribute 'text'", "expect_page_id": "lab3", "kind": "rescue", "note": "用了 `content[0].text`，而模型先回了 thinking 區塊。改用 `text_of()`（原理見 2.5）。"}
+{"q": "TypeError: Could not resolve authentication method", "expect_page_id": "lab3", "kind": "rescue", "note": "完全沒設 `ANTHROPIC_API_KEY`。這不是 401——SDK 在建立 client／第一次請求時就會丟。設好環境變數、重開終端機再跑。"}
+{"q": "v1 印出空白或半句話；v2 每次都是罐頭", "expect_page_id": "lab3", "kind": "rescue", "note": "`max_tokens` 被 thinking 吃光，`msg.stop_reason` 會是 `\"max_tokens\"`。v1 調到 2000、v2 調到 "}
+{"q": "connection refused :11434", "expect_page_id": "lab4", "kind": "rescue", "note": "Ollama 服務沒在跑。桌面版確認程式有開；純命令列版先跑 `ollama serve`。"}
+{"q": "下載中斷", "expect_page_id": "lab4", "kind": "rescue", "note": "重跑 `ollama pull`，會從斷點續傳。"}
+{"q": "爆記憶體／慢到不能用", "expect_page_id": "lab4", "kind": "rescue", "note": "模型太大。換小一號的型號（附錄 B 有對照），Lab 流程不變。小型號也還是跑不動的話，改走附錄 F——那裡用免費的雲端 GPU，對你的電腦沒有要求。"}
+{"q": "本地模型不聽「只回 JSON」", "expect_page_id": "lab4", "kind": "rescue", "note": "小模型服從性較差。prompt 給一個完整 JSON 範例讓它照抄格式，成功率大增。"}
+{"q": "ModuleNotFoundError: requests", "expect_page_id": "lab4", "kind": "rescue", "note": "`pip install requests`。"}
+{"q": "401 / invalid x-api-key", "expect_page_id": "3-2", "kind": "rescue", "note": "key 貼錯或多了空白。上面的程式收到 401 會自動清掉存的 key，重新整理就會再問你一次；手動清是 Console 執行 `localStorage.re"}
+{"q": "網路正常，卻一直顯示「AI 暫時不可用」", "expect_page_id": "3-2", "kind": "rescue", "note": "錯誤被 `catch` 吞掉了，要自己去看。F12 → Network 分頁點那個請求看回應：400 多半是送了模型不支援的參數（例如新模型已不接受 `temp"}
+{"q": "按了取消，之後每次都 401", "expect_page_id": "3-2", "kind": "rescue", "note": "舊版程式把 `prompt()` 取消回的 `null` 存成字串 `\"null\"`，之後就不再問你。上面的 `if (!k) return null;` 擋掉"}
+{"q": "CORS 相關錯誤", "expect_page_id": "3-2", "kind": "rescue", "note": "少了 `anthropic-dangerous-direct-browser-access` 標頭（名稱就是在提醒你：直呼有風險，只適合自帶金鑰的個人工具）。"}
+{"q": "JSON.parse 偶爾炸掉", "expect_page_id": "3-2", "kind": "rescue", "note": "模型多話了。已被 catch 接住是底線；要根治：system 再加一句「不要 markdown 圍欄」。"}
+{"q": "按了沒反應", "expect_page_id": "3-2", "kind": "rescue", "note": "開 Console 看紅字——從今天起，F12 是你的第一反應。"}
+{"q": "schedule is not defined", "expect_page_id": "3-3", "kind": "rescue", "note": "`srs.js` 要在主 script 之前引入：`<script src=\"srs.js\"></script>` 放前面。"}
+{"q": "module is not defined（瀏覽器）", "expect_page_id": "3-3", "kind": "rescue", "note": "少了 `typeof module !== \"undefined\"` 那行防護。"}
+{"q": "佇列永遠是空的", "expect_page_id": "3-3", "kind": "rescue", "note": "之前玩 vbTravel 忘了歸零——Console 看 `localStorage.getItem(\"vb-day\")`。"}
+{"q": "舊使用者一打開就壞", "expect_page_id": "3-3", "kind": "rescue", "note": "忘了 stateOf 的「舊紀錄自動升級」。資料改版必附資料遷移（migration）邏輯——這是真實產品每天在做的事。"}
+{"q": "網址 404", "expect_page_id": "lab9", "kind": "rescue", "note": "Pages 要一兩分鐘生效；確認分支選對、repo 已 public、檔名是 `index.html`。"}
+{"q": "網站開了但改版沒生效", "expect_page_id": "lab9", "kind": "rescue", "note": "service worker 的舊快取。把 `sw.js` 的 CACHE 改成 v2 再 push（4.2 講過的黏性）。"}
+{"q": "CI 沒有跑", "expect_page_id": "lab9", "kind": "rescue", "note": "路徑錯了。必須是 `.github/workflows/ci.yml`（注意開頭的點與複數 workflows）。"}
+{"q": "CI 紅在 setup 步驟", "expect_page_id": "lab9", "kind": "rescue", "note": "YAML 縮排錯位——YAML 對空格極度敏感，貼的時候別混到 Tab。"}
+{"q": "安裝選項沒出現", "expect_page_id": "lab9", "kind": "rescue", "note": "manifest 沒被讀到（Console 看錯誤）、icon.png 缺檔，或不在 HTTPS——Pages 天生是 HTTPS，本地 file:// 則不會"}
+{"q": "Failed to register a ServiceWorker: … origin ('null') is not supported", "expect_page_id": "lab9", "kind": "rescue", "note": "你用 `file://` 直接開啟網頁。PWA 的功能本來就要 http(s)；上面的註冊程式已加 `location.protocol` 判斷與 `.catc"}
+{"q": "`nvidia-smi` 只印一列，或說找不到指令", "expect_page_id": "lab15", "kind": "rescue", "note": "加速器沒選成兩張 T4。回設定改好，然後重啟工作階段才會生效。"}
+{"q": "下載模型卡住或失敗", "expect_page_id": "lab15", "kind": "rescue", "note": "容器的網路沒打開（設定裡的 Internet）。手機驗證沒完成的話，這個開關會是鎖住的。"}
+{"q": "No space left on device", "expect_page_id": "lab15", "kind": "rescue", "note": "工作目錄放不下太多大檔——主模型加視覺檔已接近 9 GB。要再下載別的模型請放到 `/tmp`。"}
+{"q": "Cell 4 卡在等待，或說伺服器已退出", "expect_page_id": "lab15", "kind": "rescue", "note": "打開 `server.log` 看最後幾行。最常見是顯存不足，改用 `start(ctx=65536)`。"}
+{"q": "401 / Invalid API Key", "expect_page_id": "lab15", "kind": "rescue", "note": "金鑰不符。重新複製 Cell 6 印出的那一串，確認沒有多打 `Bearer`、沒有夾帶空白或換行。"}
+{"q": "530 或 Error 1033", "expect_page_id": "lab15", "kind": "rescue", "note": "隧道已中斷，或你用的是上次開機的舊網址。回去重跑 Cell 6，換新的 Base URL。"}
+{"q": "Model not found", "expect_page_id": "lab15", "kind": "rescue", "note": "模型名稱打錯，應該是 `saluki-27b`（就是 Cell 4 的 `--alias`）。"}
+{"q": "一直轉圈沒有輸出", "expect_page_id": "lab15", "kind": "rescue", "note": "正在讀長提示（讀完 13 萬 token 的視窗要五分多鐘），或工作階段已被閒置回收。先等一分鐘；仍無反應就回頁面確認工作階段還活著。"}
+{"q": "`curl` 成功，但工具失敗", "expect_page_id": "lab15", "kind": "rescue", "note": "有些工具的設定分成「計畫」與「執行」兩個分頁，兩邊都要填。另外確認供應商類型選的是「OpenAI 相容」。"}
+{"q": "貼了截圖它說看不到", "expect_page_id": "lab15", "kind": "rescue", "note": "工具的「支援圖片」沒開啟，在模型設定區。"}
+{"q": "「名稱填 ytp-vocabuddy，選 Private（之後隨時可改公開）」 Lab 9 要用 GitHub Pages 免費方案部署，需要 **Public**；此事只在附錄 D 與 docs/MAINTENANCE.md 提到。學生到 Lab 9 才發現要改公開，且改公開前須確認歷史裡沒有金鑰（4.1／4.4 才", "expect_errata": "E-001", "expect_page_id": "lab1", "kind": "errata"}
+{"q": "`<div id=\"card\">algorithm</div>` 寫死初值；`render()` 在載入時未呼叫 畫面初值與 `WORDS[0]` 是兩份資料。學生若在 Lab 2 以後改 `WORDS` 的第一筆（或 Sprint 4 改成載入 `words.js`），首張卡會顯示舊字直到第一次互動。", "expect_errata": "E-002", "expect_page_id": "lab1", "kind": "errata"}
+{"q": "「Windows 建議用安裝 Git 時附帶的 Git Bash」 未提醒 Windows 的 `core.autocrlf` 預設會把 LF 轉 CRLF，之後 Lab 9 的 CI（Linux）與隊友的 macOS 可能出現整檔 diff 或 lint 警告。", "expect_errata": "E-003", "expect_page_id": "lab1", "kind": "errata"}
+{"q": "「點開 commit 檢查頭像有沒有正確連結」 若學生在 GitHub 開啟「Keep my email addresses private」，`user.email` 需設成 `ID+帳號@users.noreply.github.com` 才會歸戶，教材急救表只說「email 不一致", "expect_errata": "E-004", "expect_page_id": "lab1", "kind": "errata"}
+{"q": "`do { j = … } while (j === i);` `WORDS.length === 1` 時 `j` 永遠等於 `i`，無窮迴圈凍結頁面。教材 8 個字不會發生，但 Sprint 4 讓學生自訂單字包後可能踩到。", "expect_errata": "E-005", "expect_page_id": "lab2", "kind": "errata"}
+{"q": "「送出後記下編號（應該是 #1）」、commit 訊息 `closes #1` 在已經有 issue 或 PR 的 repo（例如從範本複製、或先做過別的練習），編號不會是 #1；GitHub 的 issue 與 PR 共用同一組編號。學生照抄 `closes #1` 會關錯 issue 或關不到。Lab 3 步驟 2", "expect_errata": "E-006", "expect_page_id": "lab2", "kind": "errata"}
+{"q": "`MODEL = \"claude-sonnet-4-5\"` 模型已非當前世代（目前是 Claude 5 系列：`claude-sonnet-5-5`、`claude-haiku-5-5`、`claude-opus-5-5`，主辦指定 `claude-sonnet-5-5`）。2026-10-14 實", "expect_errata": "E-007", "expect_page_id": "lab3", "kind": "errata"}
+{"q": "「Python 3.9+」 `anthropic` SDK 1.x（2026 年起的主線版本）要求 Python 3.10+。3.9 的學生 `pip install anthropic` 會靜默裝到 0.x 舊版，之後查文件會對不上。", "expect_errata": "E-008", "expect_page_id": "lab3", "kind": "errata"}
+{"q": "`print(msg.content[0].text)`、`return msg.content[0].text` 新一代模型（Sonnet 5.5、Opus 5.5 等）預設啟用 adaptive thinking，回應的 `content` 第一個區塊常是 `thinking` 而非 `text`，`.text` 會丟 `AttributeError", "expect_errata": "E-009", "expect_page_id": "lab3", "kind": "errata"}
+{"q": "「關掉網路再跑 v2——程式不噴 traceback」 `anthropic.Anthropic()` 在 `try` 之外；若環境變數根本沒設，SDK 1.x 在建立 client 時就丟 `TypeError`，降階接不到。斷網但有 key 的情況才會走到降階。", "expect_errata": "E-010", "expect_page_id": "lab3", "kind": "errata"}
+{"q": "`max_tokens=300` 新模型預設 adaptive thinking，thinking 區塊的 token **也算在 `max_tokens` 內**。v1 的自由文字 prompt 實測三次 300 tokens 幾乎全被 thinking 吃掉（`stop", "expect_errata": "E-011", "expect_page_id": "lab3", "kind": "errata"}
+{"q": "`if (queue.length === 0){ … return; }` 分支未呼叫 `stats()` 答完最後一張時卡片顯示「今日完成！」，上方 `#stats` 仍停在「今日佇列：剩 1 張」，畫面自相矛盾（2026-10-14 無頭 Chromium 實測）。", "expect_errata": "E-012", "expect_page_id": "lab5", "kind": "errata"}
+{"q": "`temperature: 0.3`；「temperature 調低」列為 Structured Output 三板斧之一 改用 `claude-sonnet-5-5` 後 API 回 400「`temperature` is deprecated for this model」（2026-10-14 實測）。錯誤被 `catch` 吞掉，畫面只看到「AI 暫時", "expect_errata": "E-014", "expect_page_id": "lab6", "kind": "errata"}
+{"q": "`box.innerHTML = \"<em>\" + c.sentence + \"</em><br>\" + …` 模型輸出直接當 HTML 插入。模型若回含 `<img onerror=…>` 之類的標籤就會執行；雖是自帶金鑰的個人工具，但第四篇要公開部署。", "expect_errata": "E-015", "expect_page_id": "lab6", "kind": "errata"}
+{"q": "`k = prompt(…); localStorage.setItem(\"vb-key\", k)` 使用者按「取消」時 `prompt()` 回 `null`，`setItem` 存成字串 `\"null\"`，之後 `getKey()` 視為已有 key 不再詢問，每次 401，只能照急救表手動 `removeItem`（2026-10-1", "expect_errata": "E-016", "expect_page_id": "lab6", "kind": "errata"}
+{"q": "「`vbTravel(1)`：8 張卡到期回來了（盒 2 間隔還短）」；「答對的卡間隔按 1→2→4→8→16 拉長；答錯的隔天就回來」 新卡初始盒 1、`due` 今天，答對後進盒 2，間隔是 `INTERVALS[2] = 2` 天：`vbTravel(1)` 實測 0 張，`vbTravel(2)` 才回來；新卡的第一個間隔是 2，間隔 1 只出現在答錯之後。答錯的卡當", "expect_errata": "E-017", "expect_page_id": "lab7", "kind": "errata"}
+{"q": "四條測試；「故意把 `INTERVALS` 改壞一格，測試會抓到」 四條案例落在盒 2、4、5 與答錯回盒 1，沒有一條落在盒 3：`INTERVALS[3]` 改壞測試照樣通過（2026-10-14 逐格改壞實測，其餘四格都抓得到）。", "expect_errata": "E-018", "expect_page_id": "lab7", "kind": "errata"}
+{"q": "`Math.floor(Date.now() / 864e5) + dayOffset` 這是 UTC 的第幾天。台灣（UTC+8）早上 8 點才換日：晚上 11 點答完的卡，隔天早上 7 點仍是「同一天」，學生時間旅行時可能困惑。", "expect_errata": "E-019", "expect_page_id": "lab7", "kind": "errata"}
+{"q": "`box.innerHTML = \"<p>\" + q.question + \"</p>\"`；`q.why`、`q.answer` 亦同 與 E-015 同類：模型輸出直接當 HTML 插入。選項用 `textContent` 是安全的，題目與解析卻用 `innerHTML`。", "expect_errata": "E-020", "expect_page_id": "lab8", "kind": "errata"}
+{"q": "`const s = log[q.answer] \\|\\| (log[q.answer] = {seen:0, wrong:0});` 以模型回的答案字串當 `log` 的鍵。大小寫不同（實測 mock 回 `\"Algorithm\"`）或答案不是單字包裡的字時，`log` 多出一個新鍵，本尊的錯誤率不變，弱點分析失準，`log` 也被垃圾鍵污染。", "expect_errata": "E-021", "expect_page_id": "lab8", "kind": "errata"}
+{"q": "`const text = await callClaude( // 把 Sprint 2 的 fetch 抽成共用函式` 教材沒給 `callClaude` 的程式與簽名（`(system, user)` 回傳文字），也沒說 `aiExample` 要改成用它；學生要自己從 Sprint 2 重構，跟「教材給關鍵程式」的承諾不符。", "expect_errata": "E-022", "expect_page_id": "lab8", "kind": "errata"}
+{"q": "`if (\"serviceWorker\" in navigator) navigator.serviceWorker.register(\"sw.js\");` 以 `file://` 直接開啟 index.html（前八個 Lab 的習慣）時，`register()` 回傳 rejected promise，Console 出現紅字 `Failed to register a ServiceWor", "expect_errata": "E-023", "expect_page_id": "lab9", "kind": "errata"}
+{"q": "`on: [push, pull_request]` PR 分支的每個 commit 會同時觸發 push 與 pull_request 兩個 run，Actions 頁面成對出現（實測 PR #26 每個 commit 兩次）。學生會困惑「為什麼跑兩次」，也多用一倍額度。", "expect_errata": "E-024", "expect_page_id": "lab9", "kind": "errata"}
+{"q": "`const SHELL = [\"./\", \"index.html\", \"words.js\", \"srs.js\", \"manifest.json\"];` SHELL 沒列 `icon.png`。離線時 manifest 參照的圖示抓不到（安裝時已存的主畫面圖示不受影響）。", "expect_errata": "E-025", "expect_page_id": "lab9", "kind": "errata"}
+{"q": "附錄 D：「`v1.0`＋Pages 上線＋PWA＋CI＋作品級 README｜Lab 9–10」；Lab 9 驗收：「tag `v1.0` 已推上」 Lab 9 驗收要求做完 PWA 與 CI 就打 `v1.0`，但附錄 D 說 `v1.0` 含作品級 README，而 README 作品化是 Lab 10 的事；照 Lab 9 打 tag 的學生，`v1.0` 裡不會有作品級 READ", "expect_errata": "E-026", "expect_page_id": "lab9", "kind": "errata"}
+{"q": "「第 3 題是關鍵：答案是 WORDS 陣列、8 個單字（Lab 1 的起始碼）」；「用瀏覽器打開 index.html，按『下一張』按到新單字出現」 Lab 11 的前置是 Lab 1 倉庫「或任一你自己的倉庫」，但照教材順序讀到第五篇的學生已做完 Sprint 4：單字在 `words.js` 而不在 `index.html`、有 18 字以上而不是 8 字；App 也早沒有「下一張」", "expect_errata": "E-027", "expect_page_id": "lab11", "kind": "errata"}
+{"q": "「怎麼跑起來：用瀏覽器直接開 index.html；SRS 測試跑 node test_srs.js」 第五篇在 Lab 9 之後，App 已是 PWA：`file://` 開啟時 service worker 註冊會丟錯（E-023），離線與安裝功能都要 http 才看得到。範例若照抄進指示檔，AI 之後會一直叫人用 `file://` 開", "expect_errata": "E-028", "expect_page_id": null, "kind": "errata"}
+{"q": "「在指示檔裡寫一條容易辨識的規矩，例如『所有新函式都要加一行繁體中文註解說明用途』」 這條規矩在本 repo 分不出有無指示檔：沒有指示檔的全新 session 也會給新函式加繁中註解，因為它模仿倉庫既有程式碼的註解風格（本 repo 2026-10-14 實測）。學生照範例做會得到假陽性，以為指示檔生效。", "expect_errata": "E-029", "expect_page_id": "lab12", "kind": "errata"}
+{"q": "「手上有一個還沒合併的 PR（沒有的話，用 Lab 13 那個）」 Lab 13 驗收第 5 項要求「技能已進版控，經 PR 合併」，照順序做到 Lab 14 時那個 PR 已經合併，沒有「還沒合併的 PR」可用。", "expect_errata": "E-030", "expect_page_id": "lab14", "kind": "errata"}
+{"q": "「全部歷史裡沒有任何金鑰 → git grep sk- 一無所獲」 照教材做的倉庫一定命中：Lab 3 README 與 Lab 6 的說明文字有 `sk-…` 字樣（教材自己示範的假 key `sk-ant-dummy`、「貼上你的 API key」提示）。學生會以為自己外洩了。", "expect_errata": "E-031", "expect_page_id": null, "kind": "errata"}
+{"q": "「請 code-reviewer 子代理審查 feature/skill-add-words 相對 main 的 diff」 步驟 2 剛把子代理限制成只能讀檔與搜尋（沒有 Bash），它就跑不了 `git diff`，也讀不到 pack 裡的舊版本；本 repo 實測它誠實回報「沒辦法做 diff」改審工作樹。卡住了？④ 只說「子代理讀的是實際檔案」，沒說 di", "expect_errata": "E-032", "expect_page_id": "lab14", "kind": "errata"}
+{"q": "「重新整理後，seen／wrong 統計仍在」 只有 `log` 進 localStorage，`queue` 每次載入都從 `WORDS` 重建，重新整理後今日進度歸零、又從 8 張開始。教材沒說這是刻意簡化，學生會以為 localStorage 沒生效。", "expect_errata": "E-013", "expect_page_id": "lab5", "kind": "errata"}

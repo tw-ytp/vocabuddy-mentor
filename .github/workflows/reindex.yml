@@ -1,0 +1,42 @@
+name: Reindex knowledge base
+on:
+  schedule:
+    - cron: "10 19 * * *"        # 每天 03:10 台北時間
+  workflow_dispatch:
+  repository_dispatch:
+    types: [textbook-updated]    # 教材或 Labs 倉庫 merge 後可發這個事件
+jobs:
+  reindex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { repository: tw-ytp/vocabuddy, path: _src/vocabuddy }
+      - uses: actions/checkout@v4
+        with: { repository: ytp26h2/ytp26h2-labs, path: _src/ytp26h2-labs }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: npm ci
+      - name: Build chunks (tiers 1–2 only; internal docs are uploaded manually)
+        run: python3 scripts/build_kb.py --vocabuddy _src/vocabuddy --labs _src/ytp26h2-labs --internal /nonexistent --out kb
+      - name: Upload (vocabuddy + labs)
+        run: node scripts/upload_kb.mjs --sources=vocabuddy,labs
+        env:
+          MENTOR_URL: ${{ secrets.MENTOR_URL }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+      - name: Retrieval eval (gate 85%)
+        run: node scripts/eval.mjs --threshold=0.85
+        env:
+          MENTOR_URL: ${{ secrets.MENTOR_URL }}
+          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: kb, path: kb/manifest.json }
+
+# 讓教材倉庫 merge 後立刻重建：在 tw-ytp/vocabuddy 加一個 workflow（需要一個對本倉庫有 repo 權限的 PAT 存成該倉庫的 secret MENTOR_DISPATCH_TOKEN）：
+#   on: { push: { branches: [main] } }
+#   jobs: { ping: { runs-on: ubuntu-latest, steps: [ { run: |
+#     curl -sS -X POST -H "Authorization: Bearer ${{ secrets.MENTOR_DISPATCH_TOKEN }}" -H "Accept: application/vnd.github+json" \
+#       https://api.github.com/repos/tw-ytp/vocabuddy-mentor/dispatches -d '{"event_type":"textbook-updated"}' } ] } }

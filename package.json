@@ -1,0 +1,22 @@
+{
+  "name": "vocabuddy-mentor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mentor — YTP2026H2 自學教材問答機器人（Discord × Cloudflare Workers × Claude）",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.mjs",
+    "kb:build": "python3 scripts/build_kb.py --vocabuddy ../vocabuddy --labs ../ytp26h2-labs --internal kb/internal --out kb",
+    "kb:upload": "node scripts/upload_kb.mjs",
+    "commands:register": "node scripts/register_commands.mjs",
+    "eval": "node scripts/eval.mjs"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261006.1",
+    "typescript": "^5.6.0",
+    "wrangler": "^4.0.0"
+  }
+}

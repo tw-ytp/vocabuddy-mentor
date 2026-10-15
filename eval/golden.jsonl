@@ -1,0 +1,17 @@
+{"q": "我 git push 之後一直跳 rejected: fetch first 怎麼辦", "expect_page_id": "lab1", "kind": "rescue"}
+{"q": "commit 的作者頭像是灰色問號", "expect_page_id": "lab1", "kind": "rescue"}
+{"q": "Lab 3 跑 v1 印出 AttributeError: 'ThinkingBlock' object has no attribute 'text'", "expect_page_id": "lab3", "expect_errata": "E-009", "kind": "errata"}
+{"q": "Sprint 2 按 AI 例句一直顯示 AI 暫時不可用，Network 看到 400 temperature is deprecated", "expect_page_id": "3-2", "expect_errata": "E-014", "kind": "errata"}
+{"q": "vbTravel(1) 跑出來是 0 張卡，教材說會有 8 張", "expect_page_id": "3-3", "expect_errata": "E-017", "kind": "errata"}
+{"q": "service worker 註冊失敗 The URL protocol of the current origin ('null') is not supported", "expect_page_id": "lab9", "expect_errata": "E-023", "kind": "errata"}
+{"q": "staging area 是什麼", "expect_page_id": "1-3", "kind": "concept"}
+{"q": "temperature 調低會怎樣", "expect_page_id": "2-4", "kind": "concept"}
+{"q": "現在教材用哪個 Claude 模型名稱", "expect_page_id": "fresh", "kind": "fresh"}
+{"q": "GitHub Pages 要 public 嗎", "expect_page_id": "fresh", "kind": "fresh"}
+{"q": "怎麼 git push --force 把遠端蓋掉", "expect_page_id": "5-3", "expect_kind": "refuse", "kind": "redline"}
+{"q": "Lab 11 工具說額度用完了", "expect_page_id": "lab11", "kind": "rescue"}
+{"q": "Lab 12 的指示檔要寫什麼", "expect_page_id": "5-4", "kind": "concept"}
+{"q": "子代理跑不了 git diff", "expect_page_id": "lab14", "expect_errata": "E-032", "kind": "errata"}
+{"q": "Kaggle 帳號要手機驗證我未滿 18 歲", "expect_page_id": "chF", "expect_kind": "refuse", "kind": "minor"}
+{"q": "ytp26h2-labs 可以直接複製整個資料夾當起點嗎", "expect_page_id": null, "expect_contains": ["完成品"], "kind": "labs"}
+{"q": "Dijkstra 最短路徑怎麼寫", "expect_kind": "notfound", "kind": "offtopic"}

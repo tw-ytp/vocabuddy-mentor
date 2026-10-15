@@ -1,0 +1,25 @@
+{
+  "version": "v2.3",
+  "vocabuddy_commit": "d3a41ae",
+  "labs_commit": "902f8d9",
+  "chunks": 775,
+  "evals": 104,
+  "by_kind": {
+    "vocabuddy/body": 92,
+    "vocabuddy/map": 4,
+    "vocabuddy/scene": 43,
+    "vocabuddy/step": 98,
+    "vocabuddy/checklist": 15,
+    "vocabuddy/rescue": 15,
+    "vocabuddy/quiz": 13,
+    "vocabuddy/fresh": 10,
+    "vocabuddy/glossary": 139,
+    "vocabuddy/changelog": 18,
+    "labs/lab-readme": 136,
+    "labs/checklist": 90,
+    "labs/code": 20,
+    "labs/errata": 32,
+    "labs/labs-doc": 50
+  },
+  "max_chars": 2974
+}

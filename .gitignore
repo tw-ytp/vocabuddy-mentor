@@ -1,0 +1,7 @@
+node_modules/
+.wrangler/
+.dev.vars
+kb/internal/*.md
+!kb/internal/README.md
+.env
+_src/
