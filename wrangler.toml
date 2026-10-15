@@ -18,7 +18,7 @@ index_name = "vocabuddy-mentor"
 [[d1_databases]]
 binding = "DB"
 database_name = "vocabuddy-mentor"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "facc017c-68dc-4dee-a991-74681d0509b2"
 migrations_dir = "migrations"
 
 [vars]
