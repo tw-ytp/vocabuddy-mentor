@@ -3,12 +3,18 @@
 import type { ChunkRow, Env } from "./types";
 import { fuse, ftsQuery, type Hit, type ChunkMeta } from "./rank";
 
-const EMBED_MAX_CHARS = 1500; // 嵌入時只取前段（模型輸入上限），全文仍由 FTS 與 LLM 看到
+const EMBED_MAX_CHARS = 900; // 嵌入時只取前段（EmbeddingGemma 300m 輸入 512 token），全文仍由 FTS 與 LLM 看到
 
 /** 用途：用 Workers AI 算文字向量；回傳 number[][]。 */
 export async function embed(env: Env, texts: string[]): Promise<number[][]> {
-  const inputs = texts.map((t) => t.slice(0, EMBED_MAX_CHARS));
-  const out: any = await env.AI.run(env.EMBED_MODEL as any, { text: inputs } as any);
+  const run = (n: number) => env.AI.run(env.EMBED_MODEL as any, { text: texts.map((t) => t.slice(0, n)) } as any);
+  let out: any;
+  try {
+    out = await run(EMBED_MAX_CHARS);
+  } catch (e) {
+    console.warn("embed retry with shorter input", String(e));
+    out = await run(400); // 輸入超過模型上限時退一步
+  }
   const data = out?.data ?? out?.embeddings ?? out;
   if (!Array.isArray(data) || !Array.isArray(data[0])) throw new Error("embed: unexpected output shape");
   return data as number[][];
