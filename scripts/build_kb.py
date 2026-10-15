@@ -496,7 +496,7 @@ def build_internal(root, version):
     if not root or not os.path.isdir(root):
         return chunks
     for fn in sorted(os.listdir(root)):
-        if not fn.endswith(".md"):
+        if not fn.endswith(".md") or fn.upper() == "README.MD":
             continue
         md = open(os.path.join(root, fn), encoding="utf-8").read()
         title = fn[:-3]
