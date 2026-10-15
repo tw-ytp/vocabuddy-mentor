@@ -18,6 +18,7 @@ test("verifyDiscordRequest accepts a valid Ed25519 signature and rejects a tampe
 test("answerPayload truncates to embed limit and carries buttons", () => {
   const p = answerPayload({ question: "q\nq", answer: "x".repeat(5000), footer: "f", logId: 7 });
   assert.ok(p.embeds[0].description.length <= 4096);
-  assert.equal(p.components[0].components[1].custom_id, "help:7");
-  assert.deepEqual(feedbackRow(1)[0].components.map((c) => c.label), ["解決了", "呼叫助教"]);
+  assert.equal(p.components[0].components[2].custom_id, "help:7");
+  assert.deepEqual(feedbackRow(1)[0].components.map((c) => c.label), ["解決了", "多說一點", "呼叫助教"]);
+  assert.deepEqual(feedbackRow(1, false)[0].components.map((c) => c.label), ["解決了", "呼叫助教"]);
 });
