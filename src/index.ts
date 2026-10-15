@@ -109,13 +109,19 @@ async function handleInteraction(req: Request, env: Env, ctx: ExecutionContext):
     const name: string = it.data?.name ?? "";
     if (env.SERVICE_OPEN === "0") return reply("Mentor 目前暫停服務（競賽期間不開放）。請直接找助教。", true);
 
+    // 一律先回「正在思考」（Discord 只給 3 秒，冷啟動時資料庫查詢會超時），實際工作放背景
+    const finish = (payload: unknown) => editOriginal(env.DISCORD_APP_ID, it.token, payload);
+    const textOnly = (content: string) => ({ content, allowed_mentions: { parse: [] } });
+
     if (name === "lab") {
       const n = Number(it.data.options?.[0]?.value ?? 0);
-      return reply(await labReply(env, n));
+      ctx.waitUntil(labReply(env, n).then((t) => finish(textOnly(t))).catch((e) => { console.error("lab", String(e)); return finish(textOnly("查詢失敗，請再試一次。")); }));
+      return deferred();
     }
     if (name === "errata") {
       const q = String(it.data.options?.[0]?.value ?? "");
-      return reply(await errataReply(env, q));
+      ctx.waitUntil(errataReply(env, q).then((t) => finish(textOnly(t))).catch((e) => { console.error("errata", String(e)); return finish(textOnly("查詢失敗，請再試一次。")); }));
+      return deferred();
     }
 
     // /ask 與 右鍵「問 Mentor」
@@ -129,17 +135,16 @@ async function handleInteraction(req: Request, env: Env, ctx: ExecutionContext):
       if (!raw.trim()) return reply("那則訊息沒有文字內容（圖片我還看不懂），請用 /ask 把錯誤訊息貼成文字。", true);
     } else return reply("不認識的指令。", true);
 
-    const limited = await checkRate(env, userHash);
-    if (limited) return reply(limited, true);
-    if ((await dailyTotal(env)) >= DAILY_CAP) return reply("今天 Mentor 的額度用完了，請直接找助教，或明天再來。", true);
-
     ctx.waitUntil((async () => {
       try {
+        const limited = await checkRate(env, userHash);
+        if (limited) { await finish(textOnly(limited)); return; }
+        if ((await dailyTotal(env)) >= DAILY_CAP) { await finish(textOnly("今天 Mentor 的額度用完了，請直接找助教，或明天再來。")); return; }
         const out = await answerQuestion(env, { raw, userHash, guildId, channelId, via });
-        await editOriginal(env.DISCORD_APP_ID, it.token, answerPayload({ question: raw, answer: out.answer, footer: out.footer, logId: out.logId }));
+        await finish(answerPayload({ question: raw, answer: out.answer, footer: out.footer, logId: out.logId }));
       } catch (e) {
         console.error("answer failed", String(e));
-        await editOriginal(env.DISCORD_APP_ID, it.token, { content: "Mentor 出了點問題，請稍後再試或直接找助教。" });
+        await finish(textOnly("Mentor 出了點問題，請稍後再試或直接找助教。"));
       }
     })());
     return deferred();
