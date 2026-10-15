@@ -42,15 +42,20 @@ export const reply = (content: string, ephemeral = false) =>
 export const deferred = () => json({ type: ResponseType.DEFERRED_CHANNEL_MESSAGE });
 
 /** 用途：答案下方的兩個按鈕；custom_id 帶 qa_log 的 id。 */
-export function feedbackRow(logId: number | string, allowMore = true) {
-  const buttons: any[] = [{ type: 2, style: 3, label: "解決了", custom_id: `solved:${logId}` }];
-  if (allowMore) buttons.push({ type: 2, style: 2, label: "多說一點", custom_id: `more:${logId}` });
-  buttons.push({ type: 2, style: 1, label: "呼叫助教", custom_id: `help:${logId}` });
-  return [{ type: 1, components: buttons }];
+export function feedbackRow(logId: number | string) {
+  return [
+    {
+      type: 1,
+      components: [
+        { type: 2, style: 3, label: "解決了", custom_id: `solved:${logId}` },
+        { type: 2, style: 1, label: "呼叫助教", custom_id: `help:${logId}` },
+      ],
+    },
+  ];
 }
 
 /** 用途：把長答案放進 embed（上限 4096 字），避免 2000 字的訊息上限。 */
-export function answerPayload(opts: { question: string; answer: string; footer: string; logId?: number | string; disabled?: boolean; allowMore?: boolean }) {
+export function answerPayload(opts: { question: string; answer: string; footer: string; logId?: number | string; disabled?: boolean }) {
   const desc = opts.answer.length > 4000 ? opts.answer.slice(0, 3990) + "\n（已截斷）" : opts.answer;
   const payload: any = {
     content: `> ${opts.question.replace(/\n/g, " ").slice(0, 180)}`,
@@ -58,7 +63,7 @@ export function answerPayload(opts: { question: string; answer: string; footer: 
     allowed_mentions: { parse: [] },
   };
   if (opts.logId != null) {
-    payload.components = feedbackRow(opts.logId, opts.allowMore ?? true);
+    payload.components = feedbackRow(opts.logId);
     if (opts.disabled) payload.components[0].components.forEach((c: any) => (c.disabled = true));
   }
   return payload;
