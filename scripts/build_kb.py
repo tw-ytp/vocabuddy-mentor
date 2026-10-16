@@ -34,6 +34,8 @@ MIN_CHARS = 80           # 太短的塊併到前一塊
 SITE = "https://tw-ytp.github.io/vocabuddy/#/"
 LABS_REPO = "https://github.com/ytp26h2/ytp26h2-labs/blob/main/"
 VOCAB_REPO = "https://github.com/tw-ytp/vocabuddy/blob/main/"
+# 倉庫目前在 tarng 帳號；轉移到 tw-ytp 後 GitHub 會自動轉址，所以沿用舊網址兩邊都通
+FAQ_URL = "https://github.com/tarng/vocabuddy-mentor/blob/main/kb/faq/"
 
 
 # ---------------------------------------------------------------- HTML → text
@@ -530,7 +532,7 @@ def build_faq(root, version):
         for i, piece in enumerate(split_long(body, 1200), 1):
             chunks.append({
                 "id": f"faq:{sha(fn)}:{i}", "source": "faq", "tier": 2,
-                "page_id": None, "url": f"https://github.com/tw-ytp/vocabuddy-mentor/blob/main/kb/faq/{fn}",
+                "page_id": None, "url": f"{FAQ_URL}{fn}",
                 "title": f"補充問答：{title}", "section": "", "kind": "faq", "lab": None, "part": "主辦補充問答",
                 "text": f"【主辦補充問答】{title}\n{piece}", "version": version,
             })
