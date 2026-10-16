@@ -162,4 +162,5 @@ npx wrangler deploy --var SERVICE_OPEN:1      # 賽後恢復
 | 指令沒出現 | 用 `GUILD_ID` 重新註冊；或等全域指令生效（最多 1 小時）；bot 有沒有被邀進伺服器 |
 | `/ask` 一直「Mentor 正在思考」然後消失 | Worker Logs 看錯誤；多半是 `ANTHROPIC_API_KEY` 無效或額度為零（Console 看 Billing） |
 | 回答說「教材沒寫到」但明明有 | `npm run eval` 看命中率；`MIN_VEC_SCORE` 可降到 0.4；確認 kb:upload 最後印出的塊數正確 |
+| 模型回 `403 forbidden Request not allowed` | Worker 跑在 Anthropic 不接受的節點（用 `curl <網址>/cdn-cgi/trace` 看 `colo`）。`wrangler.toml` 已開 Smart Placement，部署後要等 Cloudflare 累積流量（最多約 15 分鐘）才會生效；期間可從另一個網路再試 |
 | 回答裡出現舊的模型名稱或方案 | 這是知識庫跟著教材附錄 B 走；改教材附錄 B → 隔天自動重建，或手動 `npm run kb:build && npm run kb:upload` |

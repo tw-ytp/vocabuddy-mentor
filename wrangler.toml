@@ -8,6 +8,11 @@ workers_dev = true
 [observability]
 enabled = true
 
+# Smart Placement：讓 Worker 在靠近 api.anthropic.com 的節點執行。
+# 亞洲某些節點（實測 SIN）打 Anthropic 會被 403「Request not allowed」，美國節點正常。
+[placement]
+mode = "smart"
+
 [ai]
 binding = "AI"
 
