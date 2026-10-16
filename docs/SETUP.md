@@ -38,7 +38,10 @@ npm test            # 6 個本機測試應全過
    用伺服器管理員身分打開，選擇 YTP 伺服器，授權。
 6. 在 Discord 開啟「開發者模式」（使用者設定 → 進階），對伺服器名稱右鍵 → **複製伺服器 ID**（`GUILD_ID`，註冊指令時立即生效用）。
    若要讓「呼叫助教」@ 助教身分組：**Server Settings → Roles** → 該身分組右側「⋯」→ **Copy Role ID**，填進 `wrangler.toml` 的 `TA_ROLE_ID`（多個用逗號分隔）後重新 deploy。
-   同一頁把該身分組的 **Allow anyone to @mention this role** 打開，否則 bot 的 @ 只會顯示文字、不會通知。
+   該身分組的 **Display** 分頁把 **Allow anyone to @mention this role** 打開，否則 bot 的 @ 只會顯示文字、不會通知。
+7. 若 `#ytp2026h2黑客松` 是私密頻道（只開給特定身分組），伺服器層級的 View Channels 管不到它：
+   頻道齒輪 → **Permissions** → **+** 加入身分組 `Mentor` → **View Channel** 與 **Send Messages** 打綠勾。
+   沒做這步，「呼叫助教」會在 Worker log 看到 `postMessage 403 {"code": 50001}`（Missing Access）。
 
 ---
 
@@ -160,6 +163,7 @@ npx wrangler deploy --var SERVICE_OPEN:1      # 賽後恢復
 | 症狀 | 處理 |
 |---|---|
 | Discord 儲存 Endpoint 失敗 | `/health` 打得開嗎？Public Key 貼對了嗎（General Information 頁那把，不是 Bot Token）？ |
+| 「呼叫助教」顯示「通知助教失敗」 | Worker log 若是 `50001 Missing Access`：bot 看不到該頻道，照第 1 節第 7 步在頻道層級加 `Mentor`；`50013`：缺 Send Messages |
 | 指令沒出現 | 用 `GUILD_ID` 重新註冊；或等全域指令生效（最多 1 小時）；bot 有沒有被邀進伺服器 |
 | `/ask` 一直「Mentor 正在思考」然後消失 | Worker Logs 看錯誤；多半是 `ANTHROPIC_API_KEY` 無效或額度為零（Console 看 Billing） |
 | 回答說「教材沒寫到」但明明有 | `npm run eval` 看命中率；`MIN_VEC_SCORE` 可降到 0.4；確認 kb:upload 最後印出的塊數正確 |
