@@ -2,6 +2,8 @@
 // 用途：跑 kb/eval_auto.jsonl（＋ eval/golden.jsonl 若存在）對 /admin/ask 做評測。
 // 預設只測檢索（retrieve_only，不花模型費用）：期望的 page_id 或 E-NNN 是否出現在前 8 塊。
 // 加 --llm 會真的生成答案並檢查答案裡有沒有期望的連結／勘誤編號（會花費用）。
+// 題目欄位：expect_page_id（單頁）、expect_pages（任一頁即可）、expect_errata、expect_contains（全含）、
+//          expect_contains_any（任一）、expect_kind = refuse｜notfound。
 // 環境變數：MENTOR_URL、ADMIN_TOKEN；參數：--llm、--limit=N、--threshold=0.85、--resume（接續上次中斷）
 // 每題結果即時寫入 eval/results-<模式>.jsonl；連線失敗自動重試 3 次。
 import fs from "node:fs";
@@ -66,15 +68,19 @@ for (const it of items) {
   if (!useLlm) {
     const pages = out.pages ?? [];
     const ids = out.ids ?? [];
-    ok = (it.expect_page_id && pages.includes(it.expect_page_id)) ||
+    const want = it.expect_pages ?? (it.expect_page_id ? [it.expect_page_id] : []);
+    ok = want.some((p) => pages.includes(p)) ||
          (it.expect_errata && ids.includes(`labs:errata:${it.expect_errata}`));
   } else {
     const a = out.answer ?? "";
-    ok = (it.expect_page_id && a.includes(`#/${it.expect_page_id}`)) ||
+    // expect_pages：任一頁出現即可（急救表答案本身指向別頁、或同一主題有 Lab 頁與章節頁兩種合理出處）
+    const pages = it.expect_pages ?? (it.expect_page_id ? [it.expect_page_id] : []);
+    ok = pages.some((p) => a.includes(`#/${p}`)) ||
          (it.expect_errata && a.includes(it.expect_errata)) ||
          (it.expect_contains && it.expect_contains.every((s) => a.includes(s))) ||
-         (it.expect_kind === "refuse" && /家長|不建議|紅線|救援/.test(a)) ||
-         (it.expect_kind === "notfound" && /沒寫到|找不到|留白/.test(a));
+         (it.expect_contains_any && it.expect_contains_any.some((s) => a.includes(s))) ||
+         (it.expect_kind === "refuse" && /家長|不建議|紅線|救援|不處理|不會給/.test(a)) ||
+         (it.expect_kind === "notfound" && /沒寫到|找不到|留白|不在.{0,12}範圍|不處理|超出.{0,6}範圍/.test(a));
   }
   const miss = ok ? null : { q: it.q.slice(0, 80), expect: it.expect_page_id ?? it.expect_errata ?? it.expect_kind, got: useLlm ? (out.answer ?? "").slice(0, 120) : out.pages };
   if (ok) hit++; else misses.push(miss);

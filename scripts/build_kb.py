@@ -321,6 +321,19 @@ def sha(s):
 
 
 # ---------------------------------------------------------------- builders
+
+# 用途：急救表一列變一題；答案裡的「N.M」或「Lab N」頁碼也列為可接受的出處。
+def rescue_eval(q, pid, note):
+    alt = {pid}
+    for a, b in re.findall(r"(?<!\d)([1-5])\.([1-9])(?!\d)", note):  # 「1.6」→ 1-6；排除 3.10 這類版本號
+        alt.add(f"{a}-{b}")
+    for n in re.findall(r"Lab\s*(\d{1,2})", note):
+        alt.add(f"lab{n}")
+    item = {"q": q, "expect_page_id": pid, "kind": "rescue", "note": note[:80]}
+    if len(alt) > 1:
+        item["expect_pages"] = sorted(alt)
+    return item
+
 def build_vocabuddy(root, version):
     chunks, evals, pages_md = [], [], []
     index_html = open(os.path.join(root, "index.html"), encoding="utf-8").read()
@@ -354,15 +367,15 @@ def build_vocabuddy(root, version):
                     "text": f"{head}" + (f" — {sec}" if sec else "") + "\n" + piece,
                     "version": version,
                 })
-            # 自動評測：急救表每一列 = 一題
+            # 自動評測：急救表每一列 = 一題；答案若指向別頁（「回第一篇 1.6」「用 5.4 的橋接法」），該頁也算命中
             if kind == "rescue":
                 for mm in re.finditer(r"[①②③④⑤⑥⑦⑧⑨⑩]\s*(.+?)——(.+?)(?=\n|$)", body):
-                    evals.append({"q": mm.group(1).strip(), "expect_page_id": pid, "kind": "rescue", "note": mm.group(2)[:80]})
+                    evals.append(rescue_eval(mm.group(1).strip(), pid, mm.group(2)))
                 for row in re.findall(r"^\| (.+?) \| (.+?) \|$", body, re.M):
                     q, a = row
                     if q in ("症狀", "狀況", "問題") or len(q) < 4:
                         continue
-                    evals.append({"q": q, "expect_page_id": pid, "kind": "rescue", "note": a[:80]})
+                    evals.append(rescue_eval(q, pid, a))
     # glossary.md：一條一塊
     g = open(os.path.join(root, "glossary.md"), encoding="utf-8").read()
     part = ""

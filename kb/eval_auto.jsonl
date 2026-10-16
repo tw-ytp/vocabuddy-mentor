@@ -11,19 +11,19 @@
 {"q": "它說看不到任何檔案", "expect_page_id": "lab11", "kind": "rescue", "note": "你不在專案資料夾裡。先 `pwd` 看看自己在哪，`cd` 進去再啟動。"}
 {"q": "第 3 題答錯或含糊其詞", "expect_page_id": "lab11", "kind": "rescue", "note": "同上，八成是資料夾不對；也可能你的 `index.html` 還沒 commit，先 `git status` 確認檔案真的在。"}
 {"q": "說額度用完了 / 達到上限", "expect_page_id": "lab11", "kind": "rescue", "note": "免費額度通常按分鐘或按日計算，等一下再試；或改用步驟 1 表格裡的其他工具。"}
-{"q": "中文回應怪怪的、或一直講英文", "expect_page_id": "lab11", "kind": "rescue", "note": "直接跟它說「請用繁體中文回答」。它會照做，而且會記住這一輪。想讓它每次都記得，那就是 5.4 要教的事。"}
-{"q": "指示檔沒生效", "expect_page_id": "lab12", "kind": "rescue", "note": "依序檢查三件事：檔名對不對（見 5.1 的表，大小寫也要對）？在倉庫根目錄還是放到子資料夾去了？有沒有清空舊工作階段（舊階段不會重新讀檔）？"}
-{"q": "它說找不到那個檔案", "expect_page_id": "lab12", "kind": "rescue", "note": "你可能在別的資料夾啟動了工具（Lab 11 步驟 2 的第 ③ 步）。"}
+{"q": "中文回應怪怪的、或一直講英文", "expect_page_id": "lab11", "kind": "rescue", "note": "直接跟它說「請用繁體中文回答」。它會照做，而且會記住這一輪。想讓它每次都記得，那就是 5.4 要教的事。", "expect_pages": ["5-4", "lab11"]}
+{"q": "指示檔沒生效", "expect_page_id": "lab12", "kind": "rescue", "note": "依序檢查三件事：檔名對不對（見 5.1 的表，大小寫也要對）？在倉庫根目錄還是放到子資料夾去了？有沒有清空舊工作階段（舊階段不會重新讀檔）？", "expect_pages": ["5-1", "lab12"]}
+{"q": "它說找不到那個檔案", "expect_page_id": "lab12", "kind": "rescue", "note": "你可能在別的資料夾啟動了工具（Lab 11 步驟 2 的第 ③ 步）。", "expect_pages": ["lab11", "lab12"]}
 {"q": "草稿長到 200 行", "expect_page_id": "lab12", "kind": "rescue", "note": "正常，它很愛寫。你的工作就是刪，刪到 60 行以內。刪不下手時問自己：「這條規矩，我這禮拜真的會在意嗎？」"}
-{"q": "它寫了倉庫裡根本沒有的東西（例如提到不存在的測試指令）", "expect_page_id": "lab12", "kind": "rescue", "note": "這是幻覺（第二篇 2.1）。刪掉，並在提示裡加一句「只根據你實際讀到的檔案寫」。"}
-{"q": "`git push` 被拒", "expect_page_id": "lab12", "kind": "rescue", "note": "回第一篇 1.6 的遠端章節；多半是還沒設 upstream，用上面那行帶 `-u` 的指令。"}
-{"q": "隊友用不同工具，檔名不一樣", "expect_page_id": "lab12", "kind": "rescue", "note": "用 5.4 的橋接法（匯入或符號連結），只維護一份真本。"}
+{"q": "它寫了倉庫裡根本沒有的東西（例如提到不存在的測試指令）", "expect_page_id": "lab12", "kind": "rescue", "note": "這是幻覺（第二篇 2.1）。刪掉，並在提示裡加一句「只根據你實際讀到的檔案寫」。", "expect_pages": ["2-1", "lab12"]}
+{"q": "`git push` 被拒", "expect_page_id": "lab12", "kind": "rescue", "note": "回第一篇 1.6 的遠端章節；多半是還沒設 upstream，用上面那行帶 `-u` 的指令。", "expect_pages": ["1-6", "lab12"]}
+{"q": "隊友用不同工具，檔名不一樣", "expect_page_id": "lab12", "kind": "rescue", "note": "用 5.4 的橋接法（匯入或符號連結），只維護一份真本。", "expect_pages": ["5-4", "lab12"]}
 {"q": "該觸發時沒觸發", "expect_page_id": "lab13", "kind": "rescue", "note": "先改 description，不要改內容。把「什麼時候該用」寫得更具體，並把使用者可能會用的說法寫進去（「單字」「words.js」「字表」）。"}
 {"q": "不該觸發時亂觸發", "expect_page_id": "lab13", "kind": "rescue", "note": "description 寫太廣了（例如只寫「單字相關」）。加上限定條件。"}
 {"q": "它說找不到技能", "expect_page_id": "lab13", "kind": "rescue", "note": "資料夾位置錯了（回步驟 1 再問一次），或檔名不是 `SKILL.md`（大小寫要對），或沒有清空舊工作階段。"}
-{"q": "frontmatter 報錯", "expect_page_id": "lab13", "kind": "rescue", "note": "YAML 對縮排與冒號敏感（第四篇 4.3 寫 CI 時踩過同樣的坑）。確認 `---` 上下各一行、冒號後有一個空格、多行描述的續行有縮排。"}
+{"q": "frontmatter 報錯", "expect_page_id": "lab13", "kind": "rescue", "note": "YAML 對縮排與冒號敏感（第四篇 4.3 寫 CI 時踩過同樣的坑）。確認 `---` 上下各一行、冒號後有一個空格、多行描述的續行有縮排。", "expect_pages": ["4-3", "lab13"]}
 {"q": "它照做了，但步驟做一半", "expect_page_id": "lab13", "kind": "rescue", "note": "步驟寫得太籠統。把「必須看到什麼輸出才算完成」寫進去（例如第 3 條的「必須看到『檢查通過』」），它才知道怎麼算完成。"}
-{"q": "隊友的工具不一樣，技能資料夾不同", "expect_page_id": "lab13", "kind": "rescue", "note": "技能格式本身是開放標準（5.1），內容可以照搬；差的只是放哪個資料夾。各自放各自的位置，`SKILL.md` 本身只維護一份。"}
+{"q": "隊友的工具不一樣，技能資料夾不同", "expect_page_id": "lab13", "kind": "rescue", "note": "技能格式本身是開放標準（5.1），內容可以照搬；差的只是放哪個資料夾。各自放各自的位置，`SKILL.md` 本身只維護一份。", "expect_pages": ["5-1", "lab13"]}
 {"q": "它把整個 diff 複述一遍", "expect_page_id": "lab14", "kind": "rescue", "note": "輸出格式沒被遵守。在子代理指示裡把格式要求再寫嚴一點，並加一句「不要複述程式碼內容」。"}
 {"q": "它挑了一堆雞毛蒜皮", "expect_page_id": "lab14", "kind": "rescue", "note": "加一句「只回報你認為值得修改的問題；沒有就說沒有」。模型有討好傾向，會為了「有交代」而硬找問題（第二篇講過的機率性副作用）。"}
 {"q": "它想幫你直接改", "expect_page_id": "lab14", "kind": "rescue", "note": "步驟 2 的工具限制沒生效，回去確認設定。"}
@@ -36,9 +36,9 @@
 {"q": "JSON 常常解析失敗", "expect_page_id": "lab3", "kind": "rescue", "note": "prompt 再強調「只輸出 JSON、不要 markdown 圍欄」；或把 temperature 調低。這是 AI 工程的日常，第三篇教更穩的 Struct"}
 {"q": "中文變成 \\uXXXX", "expect_page_id": "lab3", "kind": "rescue", "note": "印出時用 `ensure_ascii=False`（v2 已含）。"}
 {"q": "pip 裝到 0.x，或說找不到 1.x", "expect_page_id": "lab3", "kind": "rescue", "note": "Python 低於 3.10。升級 Python 後 `python -m pip install \"anthropic>=1,<2\"`。"}
-{"q": "AttributeError: 'ThinkingBlock' object has no attribute 'text'", "expect_page_id": "lab3", "kind": "rescue", "note": "用了 `content[0].text`，而模型先回了 thinking 區塊。改用 `text_of()`（原理見 2.5）。"}
+{"q": "AttributeError: 'ThinkingBlock' object has no attribute 'text'", "expect_page_id": "lab3", "kind": "rescue", "note": "用了 `content[0].text`，而模型先回了 thinking 區塊。改用 `text_of()`（原理見 2.5）。", "expect_pages": ["2-5", "lab3"]}
 {"q": "TypeError: Could not resolve authentication method", "expect_page_id": "lab3", "kind": "rescue", "note": "完全沒設 `ANTHROPIC_API_KEY`。這不是 401——SDK 在建立 client／第一次請求時就會丟。設好環境變數、重開終端機再跑。"}
-{"q": "v1 印出空白或半句話；v2 每次都是罐頭", "expect_page_id": "lab3", "kind": "rescue", "note": "`max_tokens` 被 thinking 吃光，`msg.stop_reason` 會是 `\"max_tokens\"`。v1 調到 2000、v2 調到 "}
+{"q": "v1 印出空白或半句話；v2 每次都是罐頭", "expect_page_id": "lab3", "kind": "rescue", "note": "`max_tokens` 被 thinking 吃光，`msg.stop_reason` 會是 `\"max_tokens\"`。v1 調到 2000、v2 調到 ", "expect_pages": ["2-5", "lab3"]}
 {"q": "connection refused :11434", "expect_page_id": "lab4", "kind": "rescue", "note": "Ollama 服務沒在跑。桌面版確認程式有開；純命令列版先跑 `ollama serve`。"}
 {"q": "下載中斷", "expect_page_id": "lab4", "kind": "rescue", "note": "重跑 `ollama pull`，會從斷點續傳。"}
 {"q": "爆記憶體／慢到不能用", "expect_page_id": "lab4", "kind": "rescue", "note": "模型太大。換小一號的型號（附錄 B 有對照），Lab 流程不變。小型號也還是跑不動的話，改走附錄 F——那裡用免費的雲端 GPU，對你的電腦沒有要求。"}
@@ -55,7 +55,7 @@
 {"q": "佇列永遠是空的", "expect_page_id": "3-3", "kind": "rescue", "note": "之前玩 vbTravel 忘了歸零——Console 看 `localStorage.getItem(\"vb-day\")`。"}
 {"q": "舊使用者一打開就壞", "expect_page_id": "3-3", "kind": "rescue", "note": "忘了 stateOf 的「舊紀錄自動升級」。資料改版必附資料遷移（migration）邏輯——這是真實產品每天在做的事。"}
 {"q": "網址 404", "expect_page_id": "lab9", "kind": "rescue", "note": "Pages 要一兩分鐘生效；確認分支選對、repo 已 public、檔名是 `index.html`。"}
-{"q": "網站開了但改版沒生效", "expect_page_id": "lab9", "kind": "rescue", "note": "service worker 的舊快取。把 `sw.js` 的 CACHE 改成 v2 再 push（4.2 講過的黏性）。"}
+{"q": "網站開了但改版沒生效", "expect_page_id": "lab9", "kind": "rescue", "note": "service worker 的舊快取。把 `sw.js` 的 CACHE 改成 v2 再 push（4.2 講過的黏性）。", "expect_pages": ["4-2", "lab9"]}
 {"q": "CI 沒有跑", "expect_page_id": "lab9", "kind": "rescue", "note": "路徑錯了。必須是 `.github/workflows/ci.yml`（注意開頭的點與複數 workflows）。"}
 {"q": "CI 紅在 setup 步驟", "expect_page_id": "lab9", "kind": "rescue", "note": "YAML 縮排錯位——YAML 對空格極度敏感，貼的時候別混到 Tab。"}
 {"q": "安裝選項沒出現", "expect_page_id": "lab9", "kind": "rescue", "note": "manifest 沒被讀到（Console 看錯誤）、icon.png 缺檔，或不在 HTTPS——Pages 天生是 HTTPS，本地 file:// 則不會"}
