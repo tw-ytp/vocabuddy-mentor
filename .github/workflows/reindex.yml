@@ -22,7 +22,7 @@ jobs:
       - name: Build chunks (tiers 1–2 only; internal docs are uploaded manually)
         run: python3 scripts/build_kb.py --vocabuddy _src/vocabuddy --labs _src/ytp26h2-labs --internal /nonexistent --out kb
       - name: Upload (vocabuddy + labs)
-        run: node scripts/upload_kb.mjs --sources=vocabuddy,labs
+        run: node scripts/upload_kb.mjs --sources=vocabuddy,labs,faq
         env:
           MENTOR_URL: ${{ secrets.MENTOR_URL }}
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}

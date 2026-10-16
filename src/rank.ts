@@ -28,7 +28,8 @@ const KIND_BOOST: Record<string, number> = {
   fresh: 1.2,    // 附錄 B 時效資訊
   code: 0.8,
   changelog: 0.8,
-  internal: 0.7, // 內部文件：有倉庫版本就讓倉庫版本贏
+  faq: 1.6,      // 主辦補充問答：教材沒寫、專門回答缺口的題
+  internal: 0.9, // 內部文件：有倉庫版本就讓倉庫版本贏
 };
 
 /**

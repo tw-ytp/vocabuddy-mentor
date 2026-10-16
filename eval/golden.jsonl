@@ -15,3 +15,5 @@
 {"q": "Kaggle 帳號要手機驗證我未滿 18 歲", "expect_page_id": "chF", "expect_kind": "refuse", "kind": "minor"}
 {"q": "ytp26h2-labs 可以直接複製整個資料夾當起點嗎", "expect_page_id": null, "expect_contains": ["完成品"], "kind": "labs"}
 {"q": "Dijkstra 最短路徑怎麼寫", "expect_kind": "notfound", "kind": "offtopic"}
+{"q": "Lab 6 之前的 Lab 沒做，如何從 Lab 6 直接開始", "expect_contains": ["lab05"], "expect_kind": "faq", "kind": "faq"}
+{"q": "可以跳過 Lab 1 到 4 直接做 Sprint 1 嗎", "expect_contains": ["lab02"], "expect_kind": "faq", "kind": "faq"}

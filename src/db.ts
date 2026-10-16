@@ -80,7 +80,7 @@ export async function upsertChunks(env: Env, rows: ChunkRow[]) {
 
 /** 用途：刪掉不屬於新版本的塊；回傳被刪的 id（給 Vectorize 同步）。 */
 export async function pruneOldVersion(env: Env, keepVersion: string, sources?: string[]): Promise<string[]> {
-  const src = sources && sources.length ? sources : ["vocabuddy", "labs", "internal"];
+  const src = sources && sources.length ? sources : ["vocabuddy", "labs", "internal", "faq"];
   const ph = src.map((_, i) => `?${i + 2}`).join(",");
   const r = await env.DB.prepare(`SELECT id FROM chunks WHERE version != ?1 AND source IN (${ph})`).bind(keepVersion, ...src).all<{ id: string }>();
   const ids = (r.results ?? []).map((x) => x.id);

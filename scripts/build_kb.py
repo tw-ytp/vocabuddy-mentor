@@ -515,6 +515,28 @@ def build_internal(root, version):
     return chunks
 
 
+def build_faq(root, version):
+    """用途：kb/faq/*.md 一檔一題，公開的主辦補充問答（第 2 層，檢索高加權）。"""
+    chunks = []
+    if not root or not os.path.isdir(root):
+        return chunks
+    for fn in sorted(os.listdir(root)):
+        if not fn.endswith(".md") or fn.upper() == "README.MD":
+            continue
+        md = open(os.path.join(root, fn), encoding="utf-8").read()
+        m = re.match(r"^#\s+(.+)", md)
+        title = m.group(1).strip() if m else fn[:-3]
+        body = md[m.end():].strip() if m else md
+        for i, piece in enumerate(split_long(body, 1200), 1):
+            chunks.append({
+                "id": f"faq:{sha(fn)}:{i}", "source": "faq", "tier": 2,
+                "page_id": None, "url": f"https://github.com/tw-ytp/vocabuddy-mentor/blob/main/kb/faq/{fn}",
+                "title": f"補充問答：{title}", "section": "", "kind": "faq", "lab": None, "part": "主辦補充問答",
+                "text": f"【主辦補充問答】{title}\n{piece}", "version": version,
+            })
+    return chunks
+
+
 def git_rev(root):
     try:
         return subprocess.check_output(["git", "-C", root, "rev-parse", "--short", "HEAD"], text=True).strip()
@@ -527,6 +549,7 @@ def main():
     ap.add_argument("--vocabuddy", required=True)
     ap.add_argument("--labs", required=True)
     ap.add_argument("--internal", default="kb/internal")
+    ap.add_argument("--faq", default="kb/faq")
     ap.add_argument("--out", default="kb")
     a = ap.parse_args()
 
@@ -537,7 +560,8 @@ def main():
     c1, e1, pages_md = build_vocabuddy(a.vocabuddy, version)
     c2, e2 = build_labs(a.labs, version)
     c3 = build_internal(a.internal, version)
-    chunks = c1 + c2 + c3
+    c4 = build_faq(a.faq, version)
+    chunks = c1 + c2 + c3 + c4
     for c in chunks:
         c["sha"] = sha(c["text"])
     evals = e1 + e2
