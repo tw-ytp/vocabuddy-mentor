@@ -11,7 +11,6 @@ import { askClaude } from "./llm";
 import { FOOTER, SYSTEM_PROMPT, buildUserMessage } from "./prompts";
 import { checkRate, dailyTotal, getLog, insertLog, kbStats, pruneMissing, setFeedback, upsertChunks } from "./db";
 
-const DAILY_CAP = 400; // 全站每日題數保險絲（Max 方案 $100/月額度的保護）
 
 interface AnswerOut {
   answer: string;
@@ -141,7 +140,7 @@ async function handleInteraction(req: Request, env: Env, ctx: ExecutionContext):
       try {
         const limited = await checkRate(env, userHash);
         if (limited) { await finish(textOnly(limited)); return; }
-        if ((await dailyTotal(env)) >= DAILY_CAP) { await finish(textOnly("今天 Mentor 的額度用完了，請直接找助教，或明天再來。")); return; }
+        if ((await dailyTotal(env)) >= parseInt(env.MAX_TOTAL_PER_DAY || "400", 10)) { await finish(textOnly("今天 Mentor 的額度用完了，請直接找助教，或明天再來。")); return; }
         const out = await answerQuestion(env, { raw, userHash, guildId, channelId, via });
         await finish(answerPayload({ question: raw, answer: out.answer, footer: out.footer, logId: out.logId }));
       } catch (e) {
@@ -165,7 +164,7 @@ async function handleInteraction(req: Request, env: Env, ctx: ExecutionContext):
       // 追問：不計入每人題數，但計入全站每日保險絲（它是真的一次 API 呼叫）
       ctx.waitUntil((async () => {
         try {
-          if ((await dailyTotal(env)) >= DAILY_CAP) { await editOriginal(env.DISCORD_APP_ID, it.token, { content: "今天 Mentor 的額度用完了，請直接找助教。" }); return; }
+          if ((await dailyTotal(env)) >= parseInt(env.MAX_TOTAL_PER_DAY || "400", 10)) { await editOriginal(env.DISCORD_APP_ID, it.token, { content: "今天 Mentor 的額度用完了，請直接找助教。" }); return; }
           const log = await getLog(env, logId);
           if (!log) { await editOriginal(env.DISCORD_APP_ID, it.token, { content: "找不到原本的問題，請重新 /ask。" }); return; }
           const out = await answerQuestion(env, { raw: log.question, userHash, guildId, channelId, via: "more", detail: true });

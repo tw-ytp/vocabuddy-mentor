@@ -11,6 +11,7 @@ export interface Env {
   SITE_URL: string;         // "https://tw-ytp.github.io/vocabuddy/"
   MAX_PER_HOUR: string;     // "10"
   MAX_PER_DAY: string;      // "40"
+  MAX_TOTAL_PER_DAY: string; // "400"：全站每日題數保險絲（Max 方案 API 額度的保護）
   TA_ROLE_ID?: string;      // 呼叫助教時 @ 的身分組；留空則只寫「請助教留意」
   MIN_VEC_SCORE: string;    // "0.45"：向量最高分低於此且 FTS 無命中 → 視為「教材沒寫到」
   SERVICE_OPEN: string;     // "1" 開放；"0" 關閉（競賽日政策：關閉）
