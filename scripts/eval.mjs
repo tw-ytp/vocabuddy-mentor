@@ -52,7 +52,14 @@ for (const it of items) {
   if (!useLlm && !it.expect_page_id && !it.expect_errata) { skipped++; continue; }
   n++;
   if (done.has(it.q)) { const r = done.get(it.q); if (r.ok) hit++; else misses.push(r.miss); process.stdout.write(r.ok ? "." : "x"); continue; }
-  const res = await ask(it.q, !useLlm);
+  let res = await ask(it.q, !useLlm);
+  let outProbe = res.ok ? await res.clone().json().catch(() => ({})) : {};
+  // 模型端失敗（速率限制等）：等 30 秒再問，最多兩次
+  for (let k = 0; k < 2 && useLlm && typeof outProbe.answer === "string" && outProbe.answer.includes("連不上模型"); k++) {
+    process.stdout.write("w"); await new Promise((r) => setTimeout(r, 30_000));
+    res = await ask(it.q, !useLlm); outProbe = res.ok ? await res.clone().json().catch(() => ({})) : {};
+  }
+  if (useLlm) await new Promise((r) => setTimeout(r, 4000)); // 每題間隔，避免撞速率上限
   if (!res.ok) { const miss = { q: it.q, error: res.status }; misses.push(miss); record({ q: it.q, ok: false, miss }); process.stdout.write("x"); continue; }
   const out = await res.json();
   let ok;
