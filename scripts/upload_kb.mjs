@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 用途：把 kb/chunks.jsonl 分批送進 Worker 的 /admin/reindex，最後呼叫 /admin/finish 清掉舊版本。
+// 用途：把 kb/chunks.jsonl 分批送進 Worker 的 /admin/reindex，最後呼叫 /admin/finish 刪掉這次沒上傳的塊（換版本、改檔名、刪檔都會清）。
 // 環境變數：MENTOR_URL（例 https://vocabuddy-mentor.<帳號>.workers.dev）、ADMIN_TOKEN
 // 參數：--sources vocabuddy,labs（只重建這些來源並只清這些來源的舊版本；預設全部）
 import fs from "node:fs";
@@ -47,5 +47,5 @@ for (let i = 0; i < chunks.length; i += BATCH) {
   done += slice.length;
   if (done % 100 < BATCH) console.log(`  ${done}/${chunks.length}`);
 }
-const fin = await post("/admin/finish", { version, sources: sources ?? undefined });
+const fin = await post("/admin/finish", { keep_ids: chunks.map((c) => c.id), sources: sources ?? undefined });
 console.log("完成：", JSON.stringify(fin));

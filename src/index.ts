@@ -9,7 +9,7 @@ import { cleanQuestion, detectLab, isMinorSensitive, redLine, redactSecrets } fr
 import { embed, findErrata, labOverview, retrieve } from "./rag";
 import { askClaude } from "./llm";
 import { FOOTER, SYSTEM_PROMPT, buildUserMessage } from "./prompts";
-import { checkRate, dailyTotal, getLog, insertLog, kbStats, pruneOldVersion, setFeedback, upsertChunks } from "./db";
+import { checkRate, dailyTotal, getLog, insertLog, kbStats, pruneMissing, setFeedback, upsertChunks } from "./db";
 
 const DAILY_CAP = 400; // 全站每日題數保險絲（Max 方案 $100/月額度的保護）
 
@@ -209,8 +209,9 @@ async function handleAdmin(req: Request, env: Env, path: string): Promise<Respon
     return json({ ok: true, n: rows.length });
   }
   if (path === "/admin/finish" && req.method === "POST") {
-    const { version, sources } = (await req.json()) as { version: string; sources?: string[] };
-    const removed = await pruneOldVersion(env, version, sources);
+    const { keep_ids, sources } = (await req.json()) as { keep_ids: string[]; sources?: string[] };
+    if (!Array.isArray(keep_ids) || !keep_ids.length) return json({ error: "keep_ids required" }, 400);
+    const removed = await pruneMissing(env, keep_ids, sources);
     for (let i = 0; i < removed.length; i += 500) await env.VECTORS.deleteByIds(removed.slice(i, i + 500));
     versionCache = null;
     return json({ ok: true, removed: removed.length, stats: await kbStats(env) });

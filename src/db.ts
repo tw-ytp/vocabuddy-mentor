@@ -78,14 +78,15 @@ export async function upsertChunks(env: Env, rows: ChunkRow[]) {
   for (let i = 0; i < stmts.length; i += 90) await env.DB.batch(stmts.slice(i, i + 90));
 }
 
-/** 用途：刪掉不屬於新版本的塊；回傳被刪的 id（給 Vectorize 同步）。 */
-export async function pruneOldVersion(env: Env, keepVersion: string, sources?: string[]): Promise<string[]> {
+/** 用途：刪掉這次上傳沒包含的塊（同版本換檔名、刪檔也會清掉）；回傳被刪的 id（給 Vectorize 同步）。 */
+export async function pruneMissing(env: Env, keepIds: string[], sources?: string[]): Promise<string[]> {
   const src = sources && sources.length ? sources : ["vocabuddy", "labs", "internal", "faq"];
-  const ph = src.map((_, i) => `?${i + 2}`).join(",");
-  const r = await env.DB.prepare(`SELECT id FROM chunks WHERE version != ?1 AND source IN (${ph})`).bind(keepVersion, ...src).all<{ id: string }>();
-  const ids = (r.results ?? []).map((x) => x.id);
-  for (let i = 0; i < ids.length; i += 90) {
-    const slice = ids.slice(i, i + 90);
+  const ph = src.map((_, i) => `?${i + 1}`).join(",");
+  const r = await env.DB.prepare(`SELECT id FROM chunks WHERE source IN (${ph})`).bind(...src).all<{ id: string }>();
+  const keep = new Set(keepIds);
+  const ids = (r.results ?? []).map((x) => x.id).filter((id) => !keep.has(id));
+  for (let i = 0; i < ids.length; i += 45) {
+    const slice = ids.slice(i, i + 45);
     await env.DB.batch([
       ...slice.map((id) => env.DB.prepare("DELETE FROM chunks WHERE id = ?1").bind(id)),
       ...slice.map((id) => env.DB.prepare("DELETE FROM chunks_fts WHERE id = ?1").bind(id)),
