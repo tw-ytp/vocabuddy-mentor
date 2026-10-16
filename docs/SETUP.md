@@ -47,7 +47,7 @@ npm test            # 6 個本機測試應全過
 2. 到 <https://console.anthropic.com> 該組織 → **API Keys → Create Key**，名稱 `vocabuddy-mentor`，複製。
 3. 建議在 Console 為 Mentor 建一個 **Workspace** 並設每月 spend limit（例如 $60），把 key 建在該 Workspace 下——這是額度的硬上限。
 
-Mentor 的每人每小時、每日與全站每日題數上限都在 `wrangler.toml` 的 `MAX_PER_HOUR`、`MAX_PER_DAY`、`MAX_TOTAL_PER_DAY`（正式值 10／40／400；試用期 20／80／800）。
+Mentor 的每人每小時、每日與全站每日題數上限都在 `wrangler.toml` 的 `MAX_PER_HOUR`、`MAX_PER_DAY`、`MAX_TOTAL_PER_DAY`（正式值 10／40／400；試用期 20／80／1600）。
 
 ---
 
