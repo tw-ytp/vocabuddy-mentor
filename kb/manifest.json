@@ -1,8 +1,8 @@
 {
   "version": "v2.3",
   "vocabuddy_commit": "d3a41ae",
-  "labs_commit": "902f8d9",
-  "chunks": 775,
+  "labs_commit": "83256f6",
+  "chunks": 924,
   "evals": 104,
   "by_kind": {
     "vocabuddy/body": 92,
@@ -19,7 +19,9 @@
     "labs/checklist": 90,
     "labs/code": 20,
     "labs/errata": 32,
-    "labs/labs-doc": 50
+    "labs/labs-doc": 50,
+    "internal/internal": 147,
+    "faq/faq": 2
   },
   "max_chars": 2974
 }
