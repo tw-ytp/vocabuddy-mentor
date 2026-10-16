@@ -80,7 +80,9 @@ for (const it of items) {
          (it.expect_contains && it.expect_contains.every((s) => a.includes(s))) ||
          (it.expect_contains_any && it.expect_contains_any.some((s) => a.includes(s))) ||
          (it.expect_kind === "refuse" && /家長|不建議|紅線|救援|不處理|不會給/.test(a)) ||
-         (it.expect_kind === "notfound" && /沒寫到|找不到|留白|不在.{0,12}範圍|不處理|超出.{0,6}範圍/.test(a));
+         // notfound：模型措辭每次不同，改用結構判定——沒有引任何教材連結，且出現拒答／留白字眼
+         (it.expect_kind === "notfound" && !a.includes("tw-ytp.github.io") &&
+          /沒寫到|找不到|留白|範圍|不處理|只能協助|超出|沒有涵蓋|沒有提到/.test(a));
   }
   const miss = ok ? null : { q: it.q.slice(0, 80), expect: it.expect_page_id ?? it.expect_errata ?? it.expect_kind, got: useLlm ? (out.answer ?? "").slice(0, 120) : out.pages };
   if (ok) hit++; else misses.push(miss);
