@@ -48,7 +48,8 @@ async function answerQuestion(
   let answer: string;
   let model = env.ANSWER_MODEL;
   try {
-    const r = await askClaude({ apiKey: env.ANTHROPIC_API_KEY, model: env.ANSWER_MODEL, system: SYSTEM_PROMPT, user, maxTokens: 700 });
+    const r = await askClaude({ apiKey: env.ANTHROPIC_API_KEY, model: env.ANSWER_MODEL, system: SYSTEM_PROMPT, user, maxTokens: 2000 }); // thinking 的 token 也算在內（教材 E-011），不能設太小
+    if (r.stopReason === "max_tokens") console.warn("answer truncated: stop_reason=max_tokens", r.outputTokens);
     answer = r.text || "（模型沒有回傳文字，請再問一次或呼叫助教）";
     model = r.model;
   } catch (e) {
