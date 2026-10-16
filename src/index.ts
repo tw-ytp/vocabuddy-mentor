@@ -25,7 +25,7 @@ interface AnswerOut {
 /** 用途：完整回答流程：清理 → 遮蔽 → 檢索 → 生成 → 紀錄。 */
 async function answerQuestion(
   env: Env,
-  q: { raw: string; userHash: string; guildId: string | null; channelId: string | null; via: string },
+  q: { raw: string; userHash: string; guildId: string | null; channelId: string | null; via: string; detail?: boolean },
 ): Promise<AnswerOut> {
   const t0 = Date.now();
   const { text: question, redacted } = redactSecrets(cleanQuestion(q.raw));
@@ -44,6 +44,7 @@ async function answerQuestion(
     minor,
     redLine: red,
     lab,
+    detail: q.detail,
   });
   let answer: string;
   let model = env.ANSWER_MODEL;
@@ -159,6 +160,22 @@ async function handleInteraction(req: Request, env: Env, ctx: ExecutionContext):
       const msg = it.message ?? {};
       const comps = (msg.components ?? []).map((row: any) => ({ ...row, components: row.components.map((c: any) => ({ ...c, disabled: true })) }));
       return json({ type: ResponseType.UPDATE_MESSAGE, data: { content: (msg.content ?? "") + "\n✅ 已標記為解決", embeds: msg.embeds ?? [], components: comps, allowed_mentions: { parse: [] } } });
+    }
+    if (action === "more") {
+      // 追問：不計入每人題數，但計入全站每日保險絲（它是真的一次 API 呼叫）
+      ctx.waitUntil((async () => {
+        try {
+          if ((await dailyTotal(env)) >= DAILY_CAP) { await editOriginal(env.DISCORD_APP_ID, it.token, { content: "今天 Mentor 的額度用完了，請直接找助教。" }); return; }
+          const log = await getLog(env, logId);
+          if (!log) { await editOriginal(env.DISCORD_APP_ID, it.token, { content: "找不到原本的問題，請重新 /ask。" }); return; }
+          const out = await answerQuestion(env, { raw: log.question, userHash, guildId, channelId, via: "more", detail: true });
+          await editOriginal(env.DISCORD_APP_ID, it.token, answerPayload({ question: log.question, answer: out.answer, footer: out.footer, logId: out.logId, allowMore: false }));
+        } catch (e) {
+          console.error("more failed", String(e));
+          await editOriginal(env.DISCORD_APP_ID, it.token, { content: "Mentor 出了點問題，請稍後再試或直接找助教。" });
+        }
+      })());
+      return deferred();
     }
     if (action === "help") {
       ctx.waitUntil((async () => {
