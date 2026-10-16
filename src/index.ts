@@ -177,16 +177,42 @@ async function handleInteraction(req: Request, env: Env, ctx: ExecutionContext):
       return deferred();
     }
     if (action === "help") {
+      // 呼叫助教：先回「稍後更新原訊息」，再在頻道發一則回覆原答案的通知（@ 助教身分組），
+      // 最後把原訊息的「呼叫助教」鈕停用並加上狀態列，避免重複按。
+      const msg = it.message ?? {};
       ctx.waitUntil((async () => {
-        await setFeedback(env, logId, "help");
-        const log = await getLog(env, logId);
-        if (!channelId) return;
-        const mention = env.TA_ROLE_ID ? `<@&${env.TA_ROLE_ID}> ` : "";
-        const link = guildId && it.message?.id ? `https://discord.com/channels/${guildId}/${channelId}/${it.message.id}` : "";
-        const summary = `${mention}<@${userId}> 需要助教協助。\n**問題**：${(log?.question ?? "").slice(0, 300)}\n**Mentor 已答**：${(log?.answer ?? "").replace(/\n+/g, " ").slice(0, 300)}…\n${link}`;
-        await postMessage(env.DISCORD_BOT_TOKEN, channelId, { content: summary, allowed_mentions: { users: [userId], roles: env.TA_ROLE_ID ? [env.TA_ROLE_ID] : [] } });
+        let status = "⚠️ 通知助教失敗，請直接在頻道 @ 助教。";
+        try {
+          await setFeedback(env, logId, "help");
+          const log = await getLog(env, logId);
+          if (channelId) {
+            const roles = (env.TA_ROLE_ID || "").split(",").map((r) => r.trim()).filter(Boolean);
+            const mention = roles.map((r) => `<@&${r}>`).join(" ");
+            const q = (log?.question ?? "").replace(/\s+/g, " ").slice(0, 300);
+            const firstLine = (log?.answer ?? "").split("\n").find((l: string) => l.trim()) ?? "";
+            const summary = [
+              `${mention ? mention + " " : ""}🙋 <@${userId}> 需要助教協助`,
+              `**問題**：${q}`,
+              firstLine ? `**Mentor 已答**：${firstLine.slice(0, 200)}` : "",
+              "（完整回答見上方 Mentor 訊息；同學請在這則底下補上完整錯誤訊息與你已經試過的事）",
+            ].filter(Boolean).join("\n");
+            const ok = await postMessage(env.DISCORD_BOT_TOKEN, channelId, {
+              content: summary,
+              allowed_mentions: { users: [userId], roles },
+              ...(msg.id ? { message_reference: { message_id: msg.id, fail_if_not_exists: false } } : {}),
+            });
+            if (ok) status = roles.length ? "🙋 已通知助教，請在同一個討論裡等候。" : "🙋 已在頻道發出求助訊息（尚未設定助教身分組，請自行 @ 助教）。";
+          }
+        } catch (e) {
+          console.error("help failed", String(e));
+        }
+        const comps = (msg.components ?? []).map((row: any) => ({
+          ...row,
+          components: row.components.map((c: any) => (String(c.custom_id ?? "").startsWith("help:") ? { ...c, disabled: true } : c)),
+        }));
+        await editOriginal(env.DISCORD_APP_ID, it.token, { content: `${msg.content ?? ""}\n${status}`, embeds: msg.embeds ?? [], components: comps, allowed_mentions: { parse: [] } });
       })());
-      return reply("已通知助教，請在同一個討論裡等候；期間可以先把完整錯誤訊息貼出來。", true);
+      return json({ type: ResponseType.DEFERRED_UPDATE_MESSAGE });
     }
     return reply("已記錄。", true);
   }

@@ -37,7 +37,8 @@ npm test            # 6 個本機測試應全過
    `https://discord.com/oauth2/authorize?client_id=APP_ID&scope=bot%20applications.commands&permissions=83968`
    用伺服器管理員身分打開，選擇 YTP 伺服器，授權。
 6. 在 Discord 開啟「開發者模式」（使用者設定 → 進階），對伺服器名稱右鍵 → **複製伺服器 ID**（`GUILD_ID`，註冊指令時立即生效用）。
-   若要讓「呼叫助教」@ 助教身分組：對該身分組右鍵 → 複製 ID（`TA_ROLE_ID`）。
+   若要讓「呼叫助教」@ 助教身分組：**Server Settings → Roles** → 該身分組右側「⋯」→ **Copy Role ID**，填進 `wrangler.toml` 的 `TA_ROLE_ID`（多個用逗號分隔）後重新 deploy。
+   同一頁把該身分組的 **Allow anyone to @mention this role** 打開，否則 bot 的 @ 只會顯示文字、不會通知。
 
 ---
 
@@ -117,7 +118,7 @@ npm run commands:register
 - `/errata ThinkingBlock` → 應回 E-009
 - `/ask 我 push 一直說 rejected: fetch first` → 幾秒後出現附兩個按鈕的回答，出處指向 `#/lab1`
 - 對任何一則貼了錯誤訊息的訊息右鍵 → **應用程式 → 問 Mentor**
-- 按「呼叫助教」→ 頻道出現一則摘要（設了 `TA_ROLE_ID` 會 @ 助教）
+- 按「呼叫助教」→ 頻道出現一則回覆原答案的求助訊息（設了 `TA_ROLE_ID` 會 @ 助教），原訊息多一行狀態、該鈕變灰
 
 再跑一次 `npm run eval -- --llm --limit=20` 看真實回答（會花少量額度）。
 

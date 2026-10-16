@@ -35,7 +35,7 @@ MAX_PER_DAY = "80"                                # 試用期加倍；之後改�
 MAX_TOTAL_PER_DAY = "1600"                        # 全站每日保險絲；試用期（至 10/18）放寬，10/19 改回 400
 MIN_VEC_SCORE = "0.45"
 SERVICE_OPEN = "1"                                # 競賽日改 "0"
-TA_ROLE_ID = ""                                   # 助教身分組 id（可留空）
+TA_ROLE_ID = ""                                   # 助教身分組 id，多個用逗號分隔；空字串＝不 @ 任何人
 
 # secrets（用 `wrangler secret put` 設定，不要寫進這裡）：
 #   DISCORD_PUBLIC_KEY  DISCORD_APP_ID  DISCORD_BOT_TOKEN  ANTHROPIC_API_KEY  ADMIN_TOKEN
